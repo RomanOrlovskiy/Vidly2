@@ -16,5 +16,23 @@ namespace Vidly2.Controllers
 
             return View(movie);
         }
+        public ActionResult Edit(int id)
+        {
+            return Content("id=" + id);
+        }
+
+        //movies
+        //If pageIndex is not psecified we dispaly the first page.
+        //If sortBy is null, we sort by name.
+        public ActionResult Index(int? pageIndex, string sortBy)
+        {
+            if (!pageIndex.HasValue)
+                pageIndex = 1;
+
+            if (String.IsNullOrWhiteSpace(sortBy))
+                sortBy = "Name";
+
+            return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
+        }
     }
 }
