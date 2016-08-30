@@ -3,7 +3,24 @@
     ViewBag.Title = "Random";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@*Rendering view dynamically*@
+@{ 
+    var className = Model.Customers.Count > 1 ? "popular" : null;
+}
+@*
+    If className is null, it wont be rendered in final html.
+    In other case, this will initialize class atribute to "popular" 
+    To check, use Inspect on an "Shrek!" element in browser.
+*@
+<h2 class="@className">@Model.Movie.Name</h2>
 
-<h2>@Model.Movie.Name</h2>
-@Model.Customers
-
+@if(Model.Customers.Count == 0)
+{
+    <text>No one has rented this movie before. </text>
+}
+<ul>
+    @foreach (var cutomer in Model.Customers)
+    {
+        <li>@cutomer.Name</li>
+    }
+</ul>
