@@ -21,8 +21,8 @@ namespace Vidly2.Controllers
             return Content("id=" + id);
         }
 
-        //movies
-        //If pageIndex is not psecified we dispaly the first page.
+        // /movies
+        //If pageIndex is not specified we dispaly the first page.
         //If sortBy is null, we sort by name.
         public ActionResult Index(int? pageIndex, string sortBy)
         {
@@ -33,6 +33,11 @@ namespace Vidly2.Controllers
                 sortBy = "Name";
 
             return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
+        }
+
+        public ActionResult ByReleaseDate(int year, int month)
+        {
+            return Content(year + "/" +month);
         }
     }
 }
