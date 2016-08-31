@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Vidly2.Models;
+using System.Data.Entity; //for .Include()
 
 namespace Vidly2.Controllers
 {
@@ -38,12 +39,12 @@ namespace Vidly2.Controllers
         {
             //Dont forget about deffered execution. ToList helps with it,
             //otherwise this will be only executed during iteration loop.
-            var customers = _context.Customers.ToList();
+            var customers = _context.Customers.Include(c => c.MembershipType).ToList();
             #region .Include
             /*
-             .Include(..) is what is called Eager Loading (?).
+            .Include(..) is what is called Eager Loading (?).
             It is needed to load customer and its
-            MembershipType property together. Need to include 
+            MembershipType field together. Need to include 
             System.Data.Entity for .Include() extension method.
              */
             #endregion

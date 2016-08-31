@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Movies</h2>
+<h2>Customers</h2>
 @if (!Model.Any())
 {
     <p>There are no customers yet</p>
@@ -16,6 +16,7 @@ else
             <thead>
                 <tr>
                     <th>Customers </th>
+                    <th>Discount Rate</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,6 +25,15 @@ else
                     <tr>
                         <td>
                             @Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id }, null)
+                        </td>
+                        <td> 
+                            @* By default EF loads rows from Database (as an customer object in this case)
+                                initializing any reference type field to be null.
+                                So MembershipType is going to be null here and result in an error.
+                                To solve this problem we need to load a customer and its MembershipType together.
+                                This is called Eager Loading. Do this in CustomerController by using .Include() extension mmethod.
+                            *@
+                            @customer.MembershipType.DiscountRate%
                         </td>
                     </tr>
                 }
