@@ -1,0 +1,45 @@
+﻿@model Vidly2.Models.Customer
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Customer</h2>
+@* BeginFrom is the same as I did in CS50:
+    <form action="sell.php" method="post">. But it only renders
+    <form> withouth closing tag </form>.
+    To ensure that we close this <form> tag with </form> tag
+    you could use "using" statement so that at the end of it's block
+    the object return from Html.BeginForm will be disposed. And in
+    that dispose method it will (somehow) render </form> tag
+*@
+@using (Html.BeginForm("Create", "Customers"))
+{
+    <div class="form-group">
+        @Html.LabelFor(c => c.Name) @*same as <label>...</label>*@
+
+        @*Last anonymous object specifies any additional attributes you want your field to have
+            So this is the same as <input class="form-control">..."lots of stuff done by c#"..</input>
+
+              TextBoxFor extension method automatically provides validation that we
+              have indicated with attributes in the model classes.
+              If you use simple html code, than you would have to do it all
+              manually. Inspect input element in the browser to see what is done
+              automatically.
+
+        *@
+        @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
+        @*prefix class with @ because class is a reserved word*@
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Birthdate)
+        @Html.TextBoxFor(c => c.Birthdate, new { @class = "form-control" })
+    </div>
+    @*Checkbox has a different html layout, so you can go and look for 
+        forms layouts on bootstraps site for checkboxes.*@    
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(c => c.IsSubscribedToNewsletter) Subscribed to Newsletter?
+        </label>
+    </div>
+}
