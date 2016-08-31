@@ -35,6 +35,28 @@ namespace Vidly2.Controllers
             _context.Dispose();
         }
 
+        //Model Binding.
+        //Because the model behind the View is of a type 
+        //CustomerFormViewModel we can use this type here as a parameter and
+        //MVC Framework will automatically map request data to this
+        //object. This is called Model Binding. So MVC binds 
+        //veiwModel model to the request data that is sent by
+        //the user when he submits a form at Customer/New. 
+        //*****
+        //BUT! We could also set it as a Customer object because
+        //in the View of /Customers/New we prefix all the keys
+        //in form data as Customer (Customer.Name,Customer.Birthday, etc).
+        //*****
+        //Set a breakpoint at "return View()" and rerun the app.
+        //Go to /Customer/New and fill the form and click Save.
+        //Then inspect the content ov viewModel. It will correspond
+        //to the data set in Customer/New.
+        [HttpPost]//Makes sure this is ONLY called by POST, not GET
+        public ActionResult Create(Customer customer)
+        {
+            return View();
+        }
+
         public ActionResult New()
         {
             var membershipTypes = _context.MembershipTypes.ToList();
