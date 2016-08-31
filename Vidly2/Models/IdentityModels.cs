@@ -51,6 +51,26 @@ namespace Vidly2.Models
         //Customers table in Db
         public DbSet<Customer> Customers { get; set; }
 
+        /*  Chapter 3. Exercise 3.
+         Chapter 3. Exercise 3.
+         Doing almost the same stuff as to Customers table
+         1)Creating a DbSet<Movie> property here.
+           
+         2)Add additional properties to Movie class:
+            -Genre,
+            -ReleaseDate,
+            -Date Added,
+            -Number in Stock.
+            Migration, update-database.
+         3)Create another migration to populate Genres table
+           with Sql INSERT statement because it's a reference 
+           data (like MembershipType).
+         3.5) Manually add rows to Movie table
+         4)Modify MoviesController.
+         5)Modify Views.
+             */
+        public DbSet<Movie> Movies { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

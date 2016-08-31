@@ -207,9 +207,22 @@
     <Compile Include="Migrations\201608310855058_AddBirthdateFieldToCustomersTable.Designer.cs">
       <DependentUpon>201608310855058_AddBirthdateFieldToCustomersTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608310921499_AddMoviesTableToDatabase.cs" />
+    <Compile Include="Migrations\201608310921499_AddMoviesTableToDatabase.Designer.cs">
+      <DependentUpon>201608310921499_AddMoviesTableToDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608310945081_AddNewFieldsToMoviesTable.cs" />
+    <Compile Include="Migrations\201608310945081_AddNewFieldsToMoviesTable.Designer.cs">
+      <DependentUpon>201608310945081_AddNewFieldsToMoviesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608310949015_PopulateGenresTable.cs" />
+    <Compile Include="Migrations\201608310949015_PopulateGenresTable.Designer.cs">
+      <DependentUpon>201608310949015_PopulateGenresTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MembershipType.cs" />
@@ -316,6 +329,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608310855058_AddBirthdateFieldToCustomersTable.resx">
       <DependentUpon>201608310855058_AddBirthdateFieldToCustomersTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608310921499_AddMoviesTableToDatabase.resx">
+      <DependentUpon>201608310921499_AddMoviesTableToDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608310945081_AddNewFieldsToMoviesTable.resx">
+      <DependentUpon>201608310945081_AddNewFieldsToMoviesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608310949015_PopulateGenresTable.resx">
+      <DependentUpon>201608310949015_PopulateGenresTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

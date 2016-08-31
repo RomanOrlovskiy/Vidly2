@@ -5,32 +5,43 @@ using System.Web;
 using System.Web.Mvc;
 using Vidly2.Models;
 using Vidly2.ViewModels;
+using System.Data.Entity; //for .Include()
 
 namespace Vidly2.Controllers
 {
     public class MoviesController : Controller
     {
+
+        private ApplicationDbContext _context;
+
+        public MoviesController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+
         public ActionResult Index()
         {
+            var movies = _context.Movies.Include(m => m.Genre).ToList();
+            #region .Include
+            /*
+            .Include(..) is what is called Eager Loading (?).
+            It is needed to load customer and its
+            MembershipType field together. Need to include 
+            System.Data.Entity for .Include() extension method.
+             */
+            #endregion
 
-            var movies = GetMovies();
-            
             return View(movies);
         }
-
-        private List<Movie> GetMovies()
-        {
-            var movies = new List<Movie>()
-            {
-                new Movie {Name = "Shrek", Id = 1},
-                new Movie {Name = "Wall-e", Id = 2 }
-            };
-
-            return movies;
-        }
+       
         public ActionResult Details(int id)
         {
-            var movies = GetMovies().SingleOrDefault(m => m.Id == id);
+            var movies = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
 
             if (movies == null)
                 return HttpNotFound();
