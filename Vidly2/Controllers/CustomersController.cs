@@ -9,33 +9,56 @@ namespace Vidly2.Controllers
 {
     public class CustomersController : Controller
     {
+
+        /* Steps to get data from database
+         To get data from database instead of hard-coded values
+        we have to do next :
+        1) Declare a private field _context of type ApplicationDbContext.
+           This creates new DbContext(database) object.
+        2) Add constructor to initialize _context.
+        3) Override Dispose method.
+        4) Upgrade Index action.
+        5) (Manually) Add data to a Customer table in Database.
+             */
+
+        private ApplicationDbContext _context;
+
+        public CustomersController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+
         // GET: Customers
         public ActionResult Index()
         {
-            var customers = GetCustomers();
+            //Dont forget about deffered execution. ToList helps with it,
+            //otherwise this will be only executed during iteration loop.
+            var customers = _context.Customers.ToList();
+            #region .Include
+            /*
+             .Include(..) is what is called Eager Loading (?).
+            It is needed to load customer and its
+            MembershipType property together. Need to include 
+            System.Data.Entity for .Include() extension method.
+             */
+            #endregion
 
             return View(customers);
         }
 
         public ActionResult Details(int id)
         {
-            var customers = GetCustomers().SingleOrDefault(c => c.Id == id);
+            var customers = _context.Customers.SingleOrDefault(c => c.Id == id);
             if (customers == null)
                 return HttpNotFound();
 
             return View(customers);
-        }
-
-        private List<Customer> GetCustomers()
-        {
-            var customers = new List<Customer>()
-            {
-                new Customer {Name = "John Smith", Id = 1},
-                new Customer {Name = "Mary Williams", Id = 2 }
-            };
-
-            return customers;
-        }
+        }       
 
     }
 }
