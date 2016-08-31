@@ -9,6 +9,10 @@ namespace Vidly2.Models
 {
     public class Customer
     {
+        //This approach of changing the name of the label in HTML markup 
+        //results in the need to recompile the code every time you change 
+        //the label (?).
+        [Display(Name = "Date of birth")]
         public DateTime? Birthdate { get; set; }
 
         public int Id { get; set; }
