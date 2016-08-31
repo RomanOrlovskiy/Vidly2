@@ -17,9 +17,40 @@ namespace Vidly2.Models
             return userIdentity;
         }
     }
+    /* Begging to work with Entity Framework
+     For a new project, at first, you have to use command 
+     "enable-migrations" in package console.
+     When creating our first migration by command "add-migration
+     InitialModels", 
+     EF looked at ApplicationDbContext and discovered a bunch 
+     of IdentityDbContext DbSet tables from ASP.NET Identity
+     (used for controlling authorization and authentication),
+     that are initialized with references of type AspNetRoles, 
+     AspNetUsers and others. And used them to create necessary 
+     tables in InitialModels.cs migration file.
 
+     ******
+     To create a table for Customer or Movies class we have to 
+     set a refernce to needed Model by creating new 
+     DbSet<Customer> "table" propperty in DbContext class
+     like is shown below. After that you need to add new migration 
+     with a command "add-migration InitialModel -force". -force 
+     switch is used because InitialModel migration already 
+     exists and we need to override it.
+     After that you need to update date-base with command update-database.
+     ******
+     
+     It is importand with Code-First approach to create a migration
+     after each small step, like adding DbSet<Customer> or adding
+     new properties to Customer Model and naming that migration
+     depending on the changes we have made. So that you want 
+     have a need to deal with error's produced by Packet Manager Console.
+         */
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        //Customers table in Db
+        public DbSet<Customer> Customers { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
