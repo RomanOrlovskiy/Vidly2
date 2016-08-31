@@ -1,4 +1,4 @@
-﻿@model Vidly2.Models.Customer
+﻿@model Vidly2.ViewModels.NewCustomerViewModel
 @{
     ViewBag.Title = "New";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,7 +16,7 @@
 @using (Html.BeginForm("Create", "Customers"))
 {
     <div class="form-group">
-        @Html.LabelFor(c => c.Name) @*same as <label>...</label>*@
+        @Html.LabelFor(c => c.Customer.Name) @*same as <label>...</label>*@
 
         @*Last anonymous object specifies any additional attributes you want your field to have
             So this is the same as <input class="form-control">..."lots of stuff done by c#"..</input>
@@ -28,18 +28,25 @@
               automatically.
 
         *@
-        @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
+        @Html.TextBoxFor(c => c.Customer.Name, new { @class = "form-control" })
         @*prefix class with @ because class is a reserved word*@
     </div>
     <div class="form-group">
-        @Html.LabelFor(c => c.Birthdate)
-        @Html.TextBoxFor(c => c.Birthdate, new { @class = "form-control" })
+        @Html.LabelFor(c => c.Customer.Birthdate)
+        @Html.TextBoxFor(c => c.Customer.Birthdate, new { @class = "form-control" })
     </div>
-    @*Checkbox has a different html layout, so you can go and look for 
-        forms layouts on bootstraps site for checkboxes.*@    
+    <div class="form-group">
+        @Html.LabelFor(c => c.Customer.MembershipTypeId)
+        @Html.DropDownListFor(c => c.Customer.MembershipTypeId,
+        new SelectList(Model.MembershipTypes, "Id", "Name"),
+        "Select Membership Type",
+        new { @class = "form-control" })
+    </div>
+    @*Checkbox has a different html layout, so you can go and look for
+        forms layouts on bootstraps site for checkboxes.*@
     <div class="checkbox">
         <label>
-            @Html.CheckBoxFor(c => c.IsSubscribedToNewsletter) Subscribed to Newsletter?
+            @Html.CheckBoxFor(c => c.Customer.IsSubscribedToNewsletter) Subscribed to Newsletter?
         </label>
     </div>
 }

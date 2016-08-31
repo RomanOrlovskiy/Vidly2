@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Vidly2.Models;
 using System.Data.Entity; //for .Include()
+using Vidly2.ViewModels;
 
 namespace Vidly2.Controllers
 {
@@ -36,7 +37,16 @@ namespace Vidly2.Controllers
 
         public ActionResult New()
         {
-            return View();
+            var membershipTypes = _context.MembershipTypes.ToList();
+
+            var viewModel = new NewCustomerViewModel()
+            {
+                MembershipTypes = membershipTypes
+            };
+            
+            //As we will need to pass more than one type of data to this view
+            //it is necessary to create ViewModel that encapsulates needed types. 
+            return View(viewModel);
         }
 
         // GET: Customers

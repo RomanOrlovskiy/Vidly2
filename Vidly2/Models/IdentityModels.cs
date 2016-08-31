@@ -48,6 +48,7 @@ namespace Vidly2.Models
          */
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+
         //Customers table in Db
         public DbSet<Customer> Customers { get; set; }
 
@@ -70,6 +71,8 @@ namespace Vidly2.Models
          5)Modify Views.
              */
         public DbSet<Movie> Movies { get; set; }
+
+        public DbSet<MembershipType> MembershipTypes { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

@@ -26,6 +26,7 @@ namespace Vidly2.Models
         [Required] //Culumn name will no longer be nullable.
         [StringLength(255)]//Limits the size of the string.
         public string Name { get; set; }
+
         public bool IsSubscribedToNewsletter{ get; set; }
         
         /*Navigation Property
@@ -51,6 +52,7 @@ namespace Vidly2.Models
         as a FOREIGN KEY.
              */
         #endregion
+        [Display(Name = "Membership Type")]
         public byte MembershipTypeId { get; set; }
     }
 }
