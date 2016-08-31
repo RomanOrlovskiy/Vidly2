@@ -54,7 +54,26 @@ namespace Vidly2.Controllers
         [HttpPost]//Makes sure this is ONLY called by POST, not GET
         public ActionResult Create(Customer customer)
         {
-            return View();
+            #region Add this customer to a Database
+            //To add this customer to a Database we, first, have
+            //to add it to "_context", but this only writes customer 
+            //to memory, not database.
+            //To persist any changes to the database (like adding,
+            //deleting, changing one of its objects) we have to 
+            //use "_customer.SaveChanges();". This triggers 
+            //the process of finding out what changes were made
+            //and running those changes on the database by automatically
+            //creating necessary SQL statements.
+            //All these statements are wraped in a transaction, so either all 
+            //changes go through, or none.            
+            #endregion
+
+            _context.Customers.Add(customer);
+
+            _context.SaveChanges();
+
+            //Here we redirect the user back to the list of customers
+            return RedirectToAction("Index", "Customers");
         }
 
         public ActionResult New()
