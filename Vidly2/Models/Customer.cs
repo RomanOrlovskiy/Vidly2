@@ -9,6 +9,8 @@ namespace Vidly2.Models
 {
     public class Customer
     {
+        public DateTime? Birthdate { get; set; }
+
         public int Id { get; set; }
 
         //Data annotations approach of overriding default conventions.

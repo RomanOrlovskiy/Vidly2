@@ -203,6 +203,10 @@
     <Compile Include="Migrations\201608310817357_PopulateNameFieldInMembershipTypeTable.Designer.cs">
       <DependentUpon>201608310817357_PopulateNameFieldInMembershipTypeTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608310855058_AddBirthdateFieldToCustomersTable.cs" />
+    <Compile Include="Migrations\201608310855058_AddBirthdateFieldToCustomersTable.Designer.cs">
+      <DependentUpon>201608310855058_AddBirthdateFieldToCustomersTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -309,6 +313,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608310817357_PopulateNameFieldInMembershipTypeTable.resx">
       <DependentUpon>201608310817357_PopulateNameFieldInMembershipTypeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608310855058_AddBirthdateFieldToCustomersTable.resx">
+      <DependentUpon>201608310855058_AddBirthdateFieldToCustomersTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

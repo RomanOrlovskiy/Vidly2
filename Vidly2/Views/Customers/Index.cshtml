@@ -16,7 +16,7 @@ else
             <thead>
                 <tr>
                     <th>Customers </th>
-                    <th>Discount Rate</th>
+                    <th>Membership Type</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,8 +33,7 @@ else
                                 To solve this problem we need to load a customer and its MembershipType together.
                                 This is called Eager Loading. Do this in CustomerController by using .Include() extension mmethod.
                             *@
-                            @customer.MembershipType.DiscountRate%
-                        </td>
+                            @customer.MembershipType.Name                        </td>
                     </tr>
                 }
             </tbody>
