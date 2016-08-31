@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,15 @@ namespace Vidly2.Models
     public class Customer
     {
         public int Id { get; set; }
+
+        //Data annotations approach of overriding default conventions.
+        //To override the default conventions of EF (for example, string type
+        //it creates as a nullable field and sets unlimited range) you can specify
+        //attributes that will put some limits on the field and as result
+        //change its representation in the Database.
+        //Another approach is called Fluent API.
+        [Required] //Culumn name will no longer be nullable.
+        [StringLength(255)]//Limits the size of the string.
         public string Name { get; set; }
         public bool IsSubscribedToNewsletter{ get; set; }
         
