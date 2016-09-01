@@ -62,7 +62,7 @@
     @Html.HiddenFor(m => m.Customer.Id)
 
     @*To deal with Cross-site Request Forgery use this. It creates
-        some secret token and puts it in the cookies of the user,
+        a token and puts it in the cookies of the user,
         so that it wont be possible to execute form from different
         source/user/browser.*@
     @Html.AntiForgeryToken()

@@ -52,6 +52,7 @@ namespace Vidly2.Controllers
         //Then inspect the content ov viewModel. It will correspond
         //to the data set in Customer/New.
         [HttpPost]//Makes sure this is ONLY called by POST, not GET
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer)
         {
             #region Data Validation
@@ -125,7 +126,7 @@ namespace Vidly2.Controllers
 
                 customerInDb.Name = customer.Name;
                 customerInDb.Birthdate = customer.Birthdate;
-                customerInDb.MembershipType = customer.MembershipType;
+                customerInDb.MembershipTypeId = customer.MembershipTypeId;
                 customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
             }
 
@@ -141,6 +142,8 @@ namespace Vidly2.Controllers
 
             var viewModel = new CustomerFormViewModel()
             {
+                //To avoid the validation error for hidden Customer.Id property
+                //initialize a Customer with a new reference to C. object.
                 Customer = new Customer(),
                 MembershipTypes = membershipTypes
             };

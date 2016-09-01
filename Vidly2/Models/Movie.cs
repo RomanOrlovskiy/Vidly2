@@ -24,6 +24,7 @@ namespace Vidly2.Models
            attribute to a property and make changes to DB
            through migration to changes the default value
            of this field in DB.*/
+        
         [Display(Name="Release date")]
         [Column(TypeName = "DateTime2")]
         public DateTime ReleaseDate { get; set; }
@@ -32,6 +33,8 @@ namespace Vidly2.Models
         [Column(TypeName = "DateTime2")]
         public DateTime DateAdded { get; set; }
 
+        
+        [Range(1,20)]
         [Display(Name="Number in stock")]
         public byte NumberInStock { get; set; }
 

@@ -42,6 +42,7 @@ namespace Vidly2.Controllers
 
             var viewModel = new NewMovieViewModel()
             {
+                Movie = new Movie(),
                 Genres = genres
             };
 
@@ -49,8 +50,54 @@ namespace Vidly2.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Movie movie)
-        {            
+        {
+            #region Data Validation
+            /* 
+                 When the customer object is recieved with some data from
+                 a user, ASP.NET MVC checks whether that object is valid
+                 based on the data annotations applied on the various 
+                 properties of this class. 
+                 To get access to validation data we can use property 
+                 ModelState.
+                 3 steps for data validation:
+                 1) add restricting attributes on the properties of the 
+                    respected class, Customer in this case,
+                 2) use ModelState.IsValid to check whether user provided
+                    valid form
+                 3) add validation messages in the CustomerForm that will
+                    tell user what has gone wrong.
+                 */
+            #endregion
+
+            #region Section 5 Exercise
+            /*Section 5 Exercise
+              1. 3 steps for data validation:
+                1) add restricting attributes on the properties of the 
+                respected class, Movie in this case,
+                2) use ModelState.IsValid to check whether user provided
+                valid form,
+                3) add validation messages in the MovieForm that will
+                tell user what has gone wrong if id did,
+                4) change the color of error messages,
+                5) use Html.ValidationSummary().
+              2. Enable client-side validation.
+              3. Enable anti-forgery deffense.                          
+             */
+            #endregion
+
+            if(!ModelState.IsValid)
+            {
+                var viewModel = new NewMovieViewModel
+                {
+                    Genres = _context.Genres.ToList(),
+                    
+                };
+
+                return View("MovieForm", viewModel);
+            }
+
             if (movie.Id == 0)
             {
                 //add new movie
