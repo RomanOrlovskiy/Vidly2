@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Vidly2.Models;
 using Vidly2.ViewModels;
 using System.Data.Entity; //for .Include()
+using System.Data.Entity.Validation;
+using System.Data.Entity.Infrastructure;
 
 namespace Vidly2.Controllers
 {
@@ -24,6 +26,69 @@ namespace Vidly2.Controllers
             _context.Dispose();
         }
 
+        /*Section 4 Exercise:         
+         1) Make a form to create a new Movie:
+            - create DbSet in IdentityModels to get access to Genres table
+            - create NewMovieViewModel for New action,
+            - change labels of the Movie class to display properly.            
+         2) Create a button "Add Movie" on the /Index page which is a link
+            to a Movies/New to create a new movie.
+         3) Create saving logic for a new movie.
+         4) Update editing logic for an existing movie.
+             */
+        public ActionResult New()
+        {
+            var genres = _context.Genres.ToList();
+
+            var viewModel = new NewMovieViewModel()
+            {
+                Genres = genres
+            };
+
+            return View("MovieForm", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Save(Movie movie)
+        {            
+            if (movie.Id == 0)
+            {
+                //add new movie
+                movie.DateAdded = DateTime.Now;
+                _context.Movies.Add(movie);
+            }
+            else
+            {
+                //look for existing movie and update it
+                var movieInDb = _context.Movies.SingleOrDefault(m => m.Id == movie.Id);
+
+                movieInDb.Name = movie.Name;
+                movieInDb.ReleaseDate = movie.ReleaseDate;
+                movieInDb.NumberInStock = movie.NumberInStock;
+                movieInDb.DateAdded = movie.DateAdded;
+                movieInDb.GenreId = movie.GenreId;
+            }
+                       
+            try
+            {
+                //To deal with this error move [Required] attribute from
+                //Genre property to GenreId property in Movie.cs 
+                _context.SaveChanges();
+            }
+            catch (DbEntityValidationException y)
+            {
+                Console.WriteLine(y);
+            }
+            catch (DbUpdateException e)
+            {
+                //This triggers because in my MovieForm view I used for drop-down list
+                //m.Movie.Genre when it should be m.Movie.GenreId.
+                Console.WriteLine(e);
+            }
+
+            return RedirectToAction("Index", "Movies");
+        }
+
         public ActionResult Index()
         {
             var movies = _context.Movies.Include(m => m.Genre).ToList();
@@ -39,19 +104,26 @@ namespace Vidly2.Controllers
             return View(movies);
         }
        
-        public ActionResult Details(int id)
-        {
-            var movies = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
-
-            if (movies == null)
-                return HttpNotFound();
-
-            return View(movies);
-        }
         public ActionResult Edit(int id)
         {
-            return Content("id=" + id);
+            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
+            if (movie == null)
+                return HttpNotFound();           
+
+            var viewModel = new NewMovieViewModel()
+            {
+                Movie = movie,
+                Genres = _context.Genres.ToList()
+            };
+            
+            return View("MovieForm", viewModel);
         }
+
+        //Older stuff: Edit, Random, Index
+        //public ActionResult Edit(int id)
+        //{
+        //    return Content("id=" + id);
+        //}
 
         //// GET: Movies/Random
         //public ActionResult Random()

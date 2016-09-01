@@ -52,6 +52,7 @@ namespace Vidly2.Models
         as a FOREIGN KEY.
              */
         #endregion
+        [Required]
         [Display(Name = "Membership Type")]
         public byte MembershipTypeId { get; set; }
     }

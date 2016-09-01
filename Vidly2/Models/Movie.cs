@@ -24,12 +24,15 @@ namespace Vidly2.Models
            attribute to a property and make changes to DB
            through migration to changes the default value
            of this field in DB.*/
+        [Display(Name="Release date")]
         [Column(TypeName = "DateTime2")]
         public DateTime ReleaseDate { get; set; }
 
+        [Display(Name="Date added")]
         [Column(TypeName = "DateTime2")]
         public DateTime DateAdded { get; set; }
 
+        [Display(Name="Number in stock")]
         public byte NumberInStock { get; set; }
 
         //If we specify this propperty as required, we will face
@@ -39,9 +42,10 @@ namespace Vidly2.Models
         //result an exception will be rased. 
         //To deal with this problem we can move [Required] attribute
         //to GenreId property.       
-        [Required]
         public Genre Genre { get; set; }
-
+        
+        [Required]
+        [Display(Name="Genre")]
         public byte GenreId { get; set; }
 
 
