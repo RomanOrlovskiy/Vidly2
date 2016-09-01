@@ -7,7 +7,7 @@ using Vidly2.Models;
 
 namespace Vidly2.ViewModels
 {
-    public class NewCustomerViewModel
+    public class CustomerFormViewModel
     {
         //Creating a ViewModel so that it will be possible to pass
         //more than one type of object to the view.

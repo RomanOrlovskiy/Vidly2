@@ -1,4 +1,4 @@
-﻿@model Vidly2.ViewModels.NewCustomerViewModel
+﻿@model Vidly2.ViewModels.CustomerFormViewModel
 @{
     ViewBag.Title = "New";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,7 +10,7 @@
     <form> withouth closing tag </form>.
     To ensure that we close this <form> tag with </form> tag
     you could use "using" statement so that at the end of it's block
-    the object return from Html.BeginForm will be disposed. And in
+    the object returned from Html.BeginForm will be disposed. And in
     that dispose method it will (somehow) render </form> tag
 *@
 @using (Html.BeginForm("Create", "Customers"))
@@ -33,7 +33,7 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(c => c.Customer.Birthdate)
-        @Html.TextBoxFor(c => c.Customer.Birthdate, new { @class = "form-control" })
+        @Html.TextBoxFor(c => c.Customer.Birthdate, "{0:d MMM yyyy}",  new { @class = "form-control" })
     </div>
     <div class="form-group">
         @Html.LabelFor(c => c.Customer.MembershipTypeId)
@@ -48,6 +48,6 @@
         <label>
             @Html.CheckBoxFor(c => c.Customer.IsSubscribedToNewsletter) Subscribed to Newsletter?
         </label>
-    </div>
+    </div>    
     <button type="submit" class="btn btn-primary">Save</button>
 }

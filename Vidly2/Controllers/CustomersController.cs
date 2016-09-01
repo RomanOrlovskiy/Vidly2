@@ -80,14 +80,14 @@ namespace Vidly2.Controllers
         {
             var membershipTypes = _context.MembershipTypes.ToList();
 
-            var viewModel = new NewCustomerViewModel()
+            var viewModel = new CustomerFormViewModel()
             {
                 MembershipTypes = membershipTypes
             };
             
             //As we will need to pass more than one type of data to this view
             //it is necessary to create ViewModel that encapsulates needed types. 
-            return View(viewModel);
+            return View("CustomerForm", viewModel);
         }
 
         // GET: Customers
@@ -106,6 +106,23 @@ namespace Vidly2.Controllers
             #endregion
 
             return View(customers);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            //Look for customer by his id in database.
+            //Return if found, otherwise null.
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            if (customer == null)
+                return HttpNotFound();
+
+            var viewModel = new CustomerFormViewModel
+            {
+                Customer = customer,
+                MembershipTypes = _context.MembershipTypes.ToList()
+            };
+
+            return View("CustomerForm", viewModel);
         }
 
         public ActionResult Details(int id)
