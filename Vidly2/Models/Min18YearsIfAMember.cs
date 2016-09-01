@@ -26,13 +26,15 @@ namespace Vidly2.Models
              as they might become hardly mentainable in the future.
              It is better to avoid using them like that by explicitly
              defining needed types in the domain model of the application
-             to make code more mantainable.
+             to make code more mantainable. So I had to create 2 static
+             readonly fields in MembershipType class for this.
              */
             //Another approach is to use Enum of MembershipTypeId's 
             //instead of static fields in MembershipTypeId class.
             //But then we have to cast to (byte) the call to Enum
             #endregion
-            if (customer.MembershipTypeId == 0 || customer.MembershipTypeId == 1)
+            if (customer.MembershipTypeId == MembershipType.Unknown ||
+                customer.MembershipTypeId == MembershipType.PayAsYouGo)
                 return ValidationResult.Success;
             if (customer.Birthdate == null)
                 return new ValidationResult("Birthdate is required.");

@@ -13,7 +13,6 @@ namespace Vidly2.Models
         [StringLength(255)]
         public string Name { get; set; }
 
-
         /*"Id" or "TypeNameId"
          Every entity must have a key which would be mapped 
          to the primary key in the coresponding database. 
@@ -22,8 +21,16 @@ namespace Vidly2.Models
         public byte Id { get; set; }
 
         public short SignUpFee { get; set; }
+
         public byte DurationInMonth { get; set; }
+
         public byte DiscountRate { get; set; }
+
+        public static readonly byte Unknown =
+        //Refactoring Magic numbers from Min18YearsIfAMember attribute
+        //0 and 1 correspond to MembershipTypeId's that we defined
+        //in our Database.0;
+        public static readonly byte PayAsYouGo = 1;
 
     }
 }
