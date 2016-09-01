@@ -17,6 +17,20 @@ namespace Vidly2.Controllers.Api
             _context = new ApplicationDbContext();
         }
 
+        /*      Returning or recieving "Customer" object as a parameter
+         * is considered a poor practice because future changes
+         * can break clients that are dependant on Customer object.
+         * If we rename or remove the property it will impact
+         * the client that is depentant on that property.
+         *      To solve this issue you should create a DTO
+         * (Data Transfer Object) model which will be used to transfer
+         * data to client and back to server. But changing the DTO 
+         * is also a process to be aware of. To learn more, search
+         * for API Versioning.
+         
+             */
+                    
+
         // GET /api/customers
         public IEnumerable<Customer> GetCustomers()
         {
