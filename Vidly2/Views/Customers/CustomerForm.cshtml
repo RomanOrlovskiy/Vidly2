@@ -15,6 +15,10 @@
 *@
 @using (Html.BeginForm("Save", "Customers"))
 {
+    @* Displays a summary of all Validation request for each field.
+        Using bool true as first param just displays a massage
+        of second param without making a list of errors.*@
+    @Html.ValidationSummary(true, "Please fix the following errors")
     <div class="form-group">
         @Html.LabelFor(c => c.Customer.Name) @*same as <label>...</label>*@
 
@@ -31,12 +35,7 @@
         @Html.TextBoxFor(c => c.Customer.Name, new { @class = "form-control" })
         @*prefix class with @ because class is a reserved word*@
         @Html.ValidationMessageFor(m => m.Customer.Name)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(c => c.Customer.Birthdate)
-        @Html.TextBoxFor(c => c.Customer.Birthdate, "{0:d MMM yyyy}",  new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Customer.Birthdate)
-    </div>
+    </div>    
     <div class="form-group">
         @Html.LabelFor(c => c.Customer.MembershipTypeId)
         @Html.DropDownListFor(c => c.Customer.MembershipTypeId,
@@ -44,6 +43,11 @@
         "Select Membership Type",
         new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Customer.MembershipTypeId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Customer.Birthdate)
+        @Html.TextBoxFor(c => c.Customer.Birthdate, "{0:d MMM yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.Birthdate)
     </div>
     @*Checkbox has a different html layout, so you can go and look for
         forms layouts on bootstraps site for checkboxes.*@

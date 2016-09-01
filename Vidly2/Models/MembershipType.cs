@@ -26,10 +26,10 @@ namespace Vidly2.Models
 
         public byte DiscountRate { get; set; }
 
-        public static readonly byte Unknown =
         //Refactoring Magic numbers from Min18YearsIfAMember attribute
         //0 and 1 correspond to MembershipTypeId's that we defined
         //in our Database.0;
+        public static readonly byte Unknown = 0;
         public static readonly byte PayAsYouGo = 1;
 
     }
