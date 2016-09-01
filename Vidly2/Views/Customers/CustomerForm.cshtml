@@ -30,6 +30,7 @@
         *@
         @Html.TextBoxFor(c => c.Customer.Name, new { @class = "form-control" })
         @*prefix class with @ because class is a reserved word*@
+        @Html.ValidationMessageFor(m => m.Customer.Name)
     </div>
     <div class="form-group">
         @Html.LabelFor(c => c.Customer.Birthdate)

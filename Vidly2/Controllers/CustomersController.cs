@@ -54,6 +54,34 @@ namespace Vidly2.Controllers
         [HttpPost]//Makes sure this is ONLY called by POST, not GET
         public ActionResult Save(Customer customer)
         {
+            #region Data Validation
+            /* 
+                 When the customer object is recieved with some data from
+                 a user, ASP.NET MVC checks whether that object is valid
+                 based on the data annotations applied on the various 
+                 properties of this class. 
+                 To get access to validation data we can use property 
+                 ModelState.
+                 3 steps for data validation:
+                 1) add restricting attributes on the properties of the 
+                    respected class, Customer in this case,
+                 2) use ModelState.IsValid to check whether user provided
+                    valid form
+                 3) add validation messages in the CustomerForm that will
+                    tell user what has gone wrong.
+                 */
+            #endregion
+            if(!ModelState.IsValid)
+            {
+                //if validation somewhere failed
+                var viewModel = new CustomerFormViewModel
+                {
+                    Customer = customer,
+                    MembershipTypes = _context.MembershipTypes.ToList()
+                };
+
+                return View("CustomerForm", viewModel);
+            }
             if (customer.Id == 0)
             {
                 #region Add this customer to a Database
