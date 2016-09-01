@@ -42,6 +42,7 @@
         new SelectList(Model.MembershipTypes, "Id", "Name"),
         "Select Membership Type",
         new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.MembershipTypeId)
     </div>
     @*Checkbox has a different html layout, so you can go and look for
         forms layouts on bootstraps site for checkboxes.*@
