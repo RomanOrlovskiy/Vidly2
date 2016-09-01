@@ -8,6 +8,8 @@ using Vidly2.Models;
 
 namespace Vidly2.Dtos
 {
+    //This class should not contain any reference type objects
+    //like MembershipType.
     public class CustomerDto
     {
         //No need for data annotations here anymore. We dont need
