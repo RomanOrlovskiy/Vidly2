@@ -13,7 +13,7 @@
     the object returned from Html.BeginForm will be disposed. And in
     that dispose method it will (somehow) render </form> tag
 *@
-@using (Html.BeginForm("Create", "Customers"))
+@using (Html.BeginForm("Save", "Customers"))
 {
     <div class="form-group">
         @Html.LabelFor(c => c.Customer.Name) @*same as <label>...</label>*@
@@ -48,6 +48,16 @@
         <label>
             @Html.CheckBoxFor(c => c.Customer.IsSubscribedToNewsletter) Subscribed to Newsletter?
         </label>
-    </div>    
+    </div>
+    @*Adding hidden form for customer.Id so that if the user
+    is not New and has some Id from Database, we can later
+    use it in Save action of CustomerController class.*@
+    @Html.HiddenFor(m => m.Customer.Id)
+
+    @*To deal with Cross-site Request Forgery use this. It creates
+        some secret token and puts it in the cookies of the user,
+        so that it wont be possible to execute form from different
+        source/user/browser.*@
+    @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary">Save</button>
 }

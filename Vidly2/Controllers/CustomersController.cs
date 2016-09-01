@@ -52,23 +52,54 @@ namespace Vidly2.Controllers
         //Then inspect the content ov viewModel. It will correspond
         //to the data set in Customer/New.
         [HttpPost]//Makes sure this is ONLY called by POST, not GET
-        public ActionResult Create(Customer customer)
+        public ActionResult Save(Customer customer)
         {
-            #region Add this customer to a Database
-            //To add this customer to a Database we, first, have
-            //to add it to "_context", but this only writes customer 
-            //to memory, not database.
-            //To persist any changes to the database (like adding,
-            //deleting, changing one of its objects) we have to 
-            //use "_customer.SaveChanges();". This triggers 
-            //the process of finding out what changes were made
-            //and running those changes on the database by automatically
-            //creating necessary SQL statements.
-            //All these statements are wraped in a transaction, so either all 
-            //changes go through, or none.            
-            #endregion
+            if (customer.Id == 0)
+            {
+                #region Add this customer to a Database
+                //To add this customer to a Database we, first, have
+                //to add it to "_context", but this only writes customer 
+                //to memory, not database.
+                //To persist any changes to the database (like adding,
+                //deleting, changing one of its objects) we have to 
+                //use "_customer.SaveChanges();". This triggers 
+                //the process of finding out what changes were made
+                //and running those changes on the database by automatically
+                //creating necessary SQL statements.
+                //All these statements are wraped in a transaction, so either all 
+                //changes go through, or none.            
+                #endregion
+                _context.Customers.Add(customer);
+            }
+            else
+            {
+                //To update the entitty you have to get it from Db first.
+                //After that you modify it's properties and call SaveChanges.
+                var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
 
-            _context.Customers.Add(customer);
+                //Updating properties of existing customer in Db                
+                #region TryUpdateModel(customerInDb) method
+                //TryUpdateModel(customerInDb) method. As a result
+                //it will update properties of object in DB by
+                //values of new request data. The problem is
+                //that it openes up some security holes
+                #endregion
+
+                #region Update manually + securety holes
+                //Another approach is to update data manually.
+                //You could use AutoMapper for this task as well.
+                //But the problem withh security holes persists.
+                //To deal with it you can create another class
+                //for example UpdateCustomerDto (Dto - data transfer object)
+                //that will include only those properties 
+                //of Customer class that can be updated by user. 
+                #endregion
+
+                customerInDb.Name = customer.Name;
+                customerInDb.Birthdate = customer.Birthdate;
+                customerInDb.MembershipType = customer.MembershipType;
+                customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+            }
 
             _context.SaveChanges();
 
