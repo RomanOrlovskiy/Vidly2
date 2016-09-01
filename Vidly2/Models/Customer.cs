@@ -13,6 +13,7 @@ namespace Vidly2.Models
         //results in the need to recompile the code every time you change 
         //the label (?).
         [Display(Name = "Date of birth")]
+        [Min18YearsIfAMember]
         public DateTime? Birthdate { get; set; }
 
         public int Id { get; set; }
