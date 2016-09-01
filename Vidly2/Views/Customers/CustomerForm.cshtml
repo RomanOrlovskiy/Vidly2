@@ -68,3 +68,9 @@
     @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary">Save</button>
 }
+@*Enabling Client-side validation*@
+@section scripts
+{
+    @* Adress is from BundleConfig.cs *@
+    @Scripts.Render("~/bundles/jqueryval")
+}
