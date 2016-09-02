@@ -15,7 +15,8 @@ namespace Vidly2.Dtos
         //No need for data annotations here anymore. We dont need
         //[Required] or [Display] because we are no longer using Views.
        
-        [Min18YearsIfAMember]
+        //When using WEP API this attribute will result in an exception.
+        //[Min18YearsIfAMember]
         public DateTime? Birthdate { get; set; }
 
         public int Id { get; set; }

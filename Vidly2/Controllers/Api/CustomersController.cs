@@ -50,24 +50,36 @@ namespace Vidly2.Controllers.Api
         }
 
         //GET /api/customers/1
-        public CustomerDto GetCustomer(int id)
+        public IHttpActionResult GetCustomer(int id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
             if (customer == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
 
             //Cant use .Select here because we are returning only one Customer object.
             //So we will just return mapped CustomerDto object.
-            return Mapper.Map<Customer, CustomerDto>(customer);
+            return Ok(Mapper.Map<Customer, CustomerDto>(customer));
         }
 
         //POST /api/customers
+        /*According to RESTful convention, we need to return 201 CREATED, not 200 OK when creating an object.
+        *To do this, return IHttpActionResult instead of CustomerDto as it provides
+        *more control over the return value from action. It is simmilar to 
+        * MVC's ActionResult class and is implemented by a number of classes like:
+        *   • NotFound()
+            • Ok()
+            • Created()
+            • Unauthorized()
+            • BadRequest()
+             *  */
         [HttpPost]
-        public CustomerDto CreateCustomer(CustomerDto customerDto)
+        public IHttpActionResult CreateCustomer(CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                //throw new HttpResponseException(HttpStatusCode.BadRequest);
+                //with IHttpActionResult return this
+                return BadRequest();
             }
 
             var customer = Mapper.Map<CustomerDto, Customer>(customerDto);
@@ -79,16 +91,18 @@ namespace Vidly2.Controllers.Api
             //so we want to add this ID in our DTO and return it to the client.
             customerDto.Id = customer.Id;
 
-            return customerDto;
+            //Here, as a part of RESTful convention, we need to return the URI 
+            //of the newly created resource to the client,like "api/customer/10"
+            return Created(new Uri(Request.RequestUri + "/" + customer.Id), customerDto);
         }
 
         // PUT /api/customers/1
         [HttpPut]
-        public void UpdateCustomer(int id, CustomerDto customerDto)
+        public IHttpActionResult UpdateCustomer(int id, CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                 return BadRequest();
             }
             var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
 
@@ -101,18 +115,22 @@ namespace Vidly2.Controllers.Api
             
             _context.SaveChanges();
 
+            return Ok();
+
         }
         // DELETE /api/customers/1
         [HttpDelete]
-        public void DeleteCustomer(int id)
+        public IHttpActionResult DeleteCustomer(int id)
         {
             var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
 
             if (customerInDb == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
 
             _context.Customers.Remove(customerInDb);
             _context.SaveChanges();
+
+            return Ok();
         }
     }
 }
