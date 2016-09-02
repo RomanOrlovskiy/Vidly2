@@ -107,10 +107,10 @@ namespace Vidly2.Controllers.Api
             var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
 
             if (customerInDb == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
 
             //Map method takes also two parameters and it can understand 
-            //from them from which type to which it should map
+            //from which type to which it should map
             Mapper.Map(customerDto, customerInDb);
             
             _context.SaveChanges();

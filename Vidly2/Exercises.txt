@@ -1,0 +1,73 @@
+﻿ 
+ 
+
+  /* Steps to get data from database
+		 To get data from database instead of hard-coded values
+		we have to do next :
+		1) Declare a private field _context of type ApplicationDbContext.
+		   This creates new DbContext(database) object.
+		2) Add constructor to initialize _context.
+		3) Override Dispose method.
+		4) Upgrade Index action.
+		5) (Manually) Add data to a Customer table in Database.
+			 */
+
+
+			 /*  Section 3. Exercise 3.
+		 Section 3. Exercise 3.
+		 Doing almost the same stuff as to Customers table
+		 1)Creating a DbSet<Movie> property here.
+		   
+		 2)Add additional properties to Movie class:
+			-Genre,
+			-ReleaseDate,
+			-Date Added,
+			-Number in Stock.
+			Migration, update-database.
+		 3)Create another migration to populate Genres table
+		   with Sql INSERT statement because it's a reference 
+		   data (like MembershipType).
+		 3.5) Manually add rows to Movie table
+		 4)Modify MoviesController.
+		 5)Modify Views.
+			 */
+
+			 /*Section 4 Exercise:         
+		 1) Make a form to create a new Movie:
+			- create DbSet in IdentityModels to get access to Genres table
+			- create NewMovieViewModel for New action,
+			- change labels of the Movie class to display properly.            
+		 2) Create a button "Add Movie" on the /Index page which is a link
+			to a Movies/New to create a new movie.
+		 3) Create saving logic for a new movie.
+		 4) Update editing logic for an existing movie.
+			 */
+
+
+			 
+			#region Section 5 Exercise
+			/*Section 5 Exercise
+			  1. 3 steps for data validation:
+				1) add restricting attributes on the properties of the 
+				respected class, Movie in this case,
+				2) use ModelState.IsValid to check whether user provided
+				valid form,
+				3) add validation messages in the MovieForm that will
+				tell user what has gone wrong if id did,
+				4) change the color of error messages,
+				5) use Html.ValidationSummary().
+			  2. Enable client-side validation.
+			  3. Enable anti-forgery deffense.                          
+			 */
+			#endregion
+
+			/*Section 6 Exercise:
+			 * WEB API for CRUD operations around Movies:
+			 * 1)Initialize mapping configuration in MappingProfile from 
+			 *    Movie to MovieDto and the other way around. 
+			 * 2) Create MovieDto to not rely on Movie domain model.
+			 * 3) Create MoviesController in Controllers/Api folder with all necessary logic. 
+			 * 4) Test with Postman every URI path from API MoviesController.cs
+			 * 5) Optional: enable camel notation in WebApiConfig.cs                            
+			 
+			 */
