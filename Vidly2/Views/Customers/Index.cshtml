@@ -56,7 +56,14 @@ else
 {
     <script>
         $(document).ready(function () {
-            $("#customers .js-delete").on("click", function () {
+
+            //Using ".js-delete" as a filter for .on() method makes it so that
+            //we will have only one click handler for all delete buttons
+            //instead of having a separete click handler for each delete button.
+            //The .on click event is attached to the DOM element with ID "customers"
+            //and it will be only raised when the user clicks on the element
+            //of that "customers" table that is of class ".js-delete".
+            $("#customers").on("click", ".js-delete", function () {
                 //reference to a button DELETE so that we can use it in 
                 //case of successful ajax request
                 var button = $(this);
