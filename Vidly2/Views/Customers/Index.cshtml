@@ -5,22 +5,20 @@
 }
 
 <h2>Customers</h2>
-@if (!Model.Any())
-{
-    <p>There are no customers yet</p>
-}
-else
-{
-    <div>
-        <table id="customers" class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>Customers </th>
-                    <th>Membership Type</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
+<div>
+    <table id="customers" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Customers </th>
+                <th>Membership Type</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @*
+                    Now as we are rendering from our API using jquery
+                    we dont need this block anymore. But the table stracture
+                    should exists for DataTable plug-in.
                 @foreach (var customer in Model)
                 {
                     <tr>
@@ -33,31 +31,64 @@ else
                                 So MembershipType is going to be null here and result in an error.
                                 To solve this problem we need to load a customer and its MembershipType together.
                                 This is called Eager Loading. Do this in CustomerController by using .Include() extension mmethod.
-                            *@
+
                             @customer.MembershipType.Name
                         </td>
                         <td>
                             <button data-customer-id="@customer.Id" class="btn btn-link js-delete">Delete</button>
-                            @* btn btn-link so that isntead of hyperlink the link will look like a button,
+                             btn btn-link so that isntead of hyperlink the link will look like a button,
                                 js-delete - so that later you can distinguish it with jQuery ,
                                 attribute "data-customer-id" to have knowledge of id of the customer
                                     so that you can use it in $.ajax's url statement,
-                            *@
+
                         </td>
                     </tr>
-                }
-            </tbody>
-        </table>
+                    }
+            *@
+        </tbody>
+    </table>
 
-    </div>
-}
+</div>
+
 
 @section scripts
 {
     <script>
         $(document).ready(function () {
-            //eanable datatables plug-in
-            $("#customers").DataTable();
+            //anable datatables plug-in
+            $("#customers").DataTable({
+                ajax: {
+                    url: "/api/customers",
+                    //dataSrc is set to "" because the response from the API is
+                    //an array of objects and we dont need to specify a particular
+                    //attribute to pick as a data source because the array itself
+                    //is an actual source of data and our DataTable does not
+                    //need to go to other object to get it.
+                    dataSrc: ""
+                },
+                //supply an object for each column
+                columns: [
+                    {
+                        //in this object we specify various properties of that column
+                        //data property tells where to get data for this column.
+                        data: "name",
+                        //data property reads it as a string but we want it to
+                        //also be a link to the Edit page. For this user "render"
+                        render: function (data, type, customer) {
+                            return "<a href='/customers/edit/" + customer.id + "'>" + customer.name + "</a>";
+                        }
+                    },
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn-link js-delete' data-customer-id=" + data + ">Delete</button>";
+                        }
+                    }
+                ]
+            });
             //Using ".js-delete" as a filter
             //Using ".js-delete" as a filter for .on() method makes it so that
             //we will have only one click handler for all delete buttons

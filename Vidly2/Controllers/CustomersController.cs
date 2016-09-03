@@ -158,7 +158,7 @@ namespace Vidly2.Controllers
         {
             //Dont forget about deffered execution. ToList helps with it,
             //otherwise this will be only executed during iteration loop.
-            var customers = _context.Customers.Include(c => c.MembershipType).ToList();
+            //var customers = _context.Customers.Include(c => c.MembershipType).ToList();
             #region .Include
             /*
             .Include(..) is what is called Eager Loading (?).
@@ -168,7 +168,11 @@ namespace Vidly2.Controllers
              */
             #endregion
 
-            return View(customers);
+            //return View(customers);
+
+            //Update: no need for list anymore as we are going with API,
+            // DataTables and jQuery.
+            return View();
         }
 
         public ActionResult Edit(int id)
