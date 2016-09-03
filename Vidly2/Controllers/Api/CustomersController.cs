@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Vidly2.Dtos;
 using Vidly2.Models;
+using System.Data.Entity;
 
 namespace Vidly2.Controllers.Api
 {
@@ -44,9 +45,18 @@ namespace Vidly2.Controllers.Api
         // GET /api/customers
         public IEnumerable<CustomerDto> GetCustomers()
         {
+            
             //Mapping Customer objects from database to CustomerDto objects
             //Mapper.Map is a reference to the method(delegate) not the call, so no () at the end.
-            return _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
+            return _context.Customers
+                .Include(c => c.MembershipType)
+                .ToList()
+                .Select(Mapper.Map<Customer, CustomerDto>);
+
+            //Now, when we are getting data using our API we are not 
+            //sending MembershipType information. So we need to Eager Load
+            //the customers with their MembershipType together.
+            //So, I need .Include() here to do this.
         }
 
         //GET /api/customers/1
