@@ -56,7 +56,7 @@
     <script>
         $(document).ready(function () {
             //anable datatables plug-in
-            $("#customers").DataTable({
+            var table = $("#customers").DataTable({
                 ajax: {
                     url: "/api/customers",
                     //dataSrc is set to "" because the response from the API is
@@ -108,9 +108,19 @@
                             url: "/api/customers/" + button.attr("data-customer-id"),
                             method: "DELETE",
                             success: function () {
-                                //remove the row in the table where DELETE button was clicked
-                                //and remove customer from DB
-                                button.parents("tr").remove();
+                                //Remove the row in the table where DELETE button was clicked
+                                //and remove customer from DB.
+
+                                //This just removes the <tr> node from the DOM.
+                                //So if after removing a customer you will next search
+                                //for his name without reloading the page, he will still be found.
+                                //This happens because the customer is still in DataTable
+                                //because DataTables keeps the list of customers internaly so when
+                                //you go back to search the table, the table is refreshed using
+                                //that internal list, and as result shows deleted customer again.
+                                //To fix this you need to work with internal list of DataTable:
+                                //first delete the customer, then redraw itself.
+                                table.row(button.parents("tr")).remove().draw();
                             }
                         });
                     }
