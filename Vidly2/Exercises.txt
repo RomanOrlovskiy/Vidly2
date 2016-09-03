@@ -71,3 +71,7 @@
 			 * 5) Optional: enable camel notation in WebApiConfig.cs                            
 			 
 			 */
+
+			 Section 7 Exercise:
+			 Using jQuery and AJAX to make calls to API along side with
+			 Bootbox and DataTable plug-ins for front-end.

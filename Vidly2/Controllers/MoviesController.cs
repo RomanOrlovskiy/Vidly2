@@ -136,7 +136,7 @@ namespace Vidly2.Controllers
 
         public ActionResult Index()
         {
-            var movies = _context.Movies.Include(m => m.Genre).ToList();
+            //var movies = _context.Movies.Include(m => m.Genre).ToList();
             #region .Include
             /*
             .Include(..) is what is called Eager Loading (?).
@@ -146,9 +146,13 @@ namespace Vidly2.Controllers
              */
             #endregion
 
-            return View(movies);
+            //return View(movies);
+
+            //Update: no need for list anymore as we are going with API,
+            // DataTables and jQuery.
+            return View();
         }
-       
+
         public ActionResult Edit(int id)
         {
             var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
