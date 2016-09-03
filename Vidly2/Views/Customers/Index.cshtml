@@ -56,7 +56,9 @@ else
 {
     <script>
         $(document).ready(function () {
-
+            //eanable datatables plug-in
+            $("#customers").DataTable();
+            //Using ".js-delete" as a filter
             //Using ".js-delete" as a filter for .on() method makes it so that
             //we will have only one click handler for all delete buttons
             //instead of having a separete click handler for each delete button.
