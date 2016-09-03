@@ -36,6 +36,9 @@ namespace Vidly2.Controllers
          3) Create saving logic for a new movie.
          4) Update editing logic for an existing movie.
              */
+
+        //Only user with role CanManageMovies should be able to access this action
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult New()
         {
             var genres = _context.Genres.ToList();
@@ -50,6 +53,7 @@ namespace Vidly2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Save(Movie movie)
         {
             #region Data Validation
@@ -150,9 +154,16 @@ namespace Vidly2.Controllers
 
             //Update: no need for list anymore as we are going with API,
             // DataTables and jQuery.
-            return View();
+
+            //Depending on the role of the current user, give him respecting View
+            if(User.IsInRole(RoleName.CanManageMovies))
+                return View("List");
+
+            return View("ReadOnlyList");
+
         }
 
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Edit(int id)
         {
             var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
