@@ -13,13 +13,13 @@
     <div class="form-group">
         <label>Customer</label>
         <div class="tt-container">
-            <input id="customer" type="text" value="" class="form-control" />
+            <input id="customer" data-rule-validCustomer="true" required type="text" value="" class="form-control" />
         </div>
     </div>
     <div class="form-group">
         <label>Movie</label>
         <div class="tt-container">
-            <input id="movie" type="text" value="" class="form-control" />
+            <input id="movie" data-rule-atLeastOneMovie="true" type="text" value="" class="form-control" />
         </div>
     </div>
     <div class="row">
@@ -32,6 +32,7 @@
 </form>
 @section scripts
 {
+    @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(document).ready(function () {
 
@@ -102,20 +103,33 @@
 
             });
 
-            $("#newRental").submit(function (e) {
-                e.preventDefault();
+            //implementing validation
+            $.validator.addMethod("validCustomer", function () {
+                return vm.customerId && vm.csutomerId !== 0;
+            }, "Please select a valid customer.");
 
-                $.ajax({
-                    url: "/api/newRentals",
-                    method: "post",
-                    data: vm
-                })
-                .done(function () {
-                    toastr.success("Rentals successfully recorded.");
-                })
-                .fail(function () {
-                    toastr.success("Shit went wrong, man.");
-                });
+            $.validator.addMethod("atLeastOneMovie", function () {
+                return vm.movieIds.length > 0;
+            }, "Please select at least one movie.");
+
+            $("#newRental").validate({
+                //if submit form is valid, this function will be called to
+                //submit the form to the server
+                submitHandler: function () {
+                    e.preventDefault();
+
+                    $.ajax({
+                        url: "/api/newRentals",
+                        method: "post",
+                        data: vm
+                    })
+                    .done(function () {
+                        toastr.success("Rentals successfully recorded.");
+                    })
+                    .fail(function () {
+                        toastr.success("Shit went wrong, man.");
+                    });
+                }
             });
         });
     </script>
