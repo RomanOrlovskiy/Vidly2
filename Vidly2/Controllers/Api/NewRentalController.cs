@@ -32,17 +32,40 @@ namespace Vidly2.Controllers.Api
         // POST /api/CreateNewRentals
         [System.Web.Http.HttpPost]
         public IHttpActionResult CreateNewRentals(NewRentalDto newRental)
-        {           
+        {
+            #region Edge cases
+            //Edge cases.
+            //There are two approaches to dealing with edge cases: deffensive
+            //and optimistic. Deffensive is mostly used for public API's to 
+            //handle each possible edge cases and give back the user specific 
+            //message to the error. THe problem is that it increases the complexity
+            //of the code and as result its maintainability in the future.
+            //Optimistic approach on the other hand is less troublesome.
+            //Like in this case, instead of dealing with 4 edge cases, you may
+            //only deal with the most important one.
 
-            var customer = _context.Customers.Single(c => c.Id == newRental.CustomerId);
+            //if (newRental.MovieIds.Count == 0)
+            //    return BadRequest("No movie ids have been given.");
+
+            //if (customer == null)
+            //    return BadRequest("CustomerId is not valid.");
+
+            //if (movies.Count != newRental.MovieIds.Count)
+            //    return BadRequest("One or more movieIds are invalid.");
+            #endregion
+
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == newRental.CustomerId);
 
             //This is the same as SQL query:
             //SELECT * FROM movies WHERE Id IN(1,2,3),
             //which is like: select every movie Id of which is in the newRental.MoviesIds list.
-            var movies = _context.Movies.Where(m => newRental.MovieIds.Contains(m.Id));
+            var movies = _context.Movies.Where(m => newRental.MovieIds.Contains(m.Id)).ToList();
 
             foreach (var movie in movies)
             {
+                if (movie.NumberAvailable == 0)
+                    return BadRequest("Movie is not available.");
+
                 movie.NumberAvailable--;
 
                 var rental = new Rental()
