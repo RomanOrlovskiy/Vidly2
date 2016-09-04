@@ -111,10 +111,10 @@
                     data: vm
                 })
                 .done(function () {
-                    alert("done");
+                    toastr.success("Rentals successfully recorded.");
                 })
                 .fail(function () {
-                    alert("failed");
+                    toastr.success("Shit went wrong, man.");
                 });
             });
         });
