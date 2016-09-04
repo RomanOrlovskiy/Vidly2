@@ -13,13 +13,13 @@
     <div class="form-group">
         <label>Customer</label>
         <div class="tt-container">
-            <input id="customer" data-rule-validCustomer="true" required type="text" value="" class="form-control" />
+            <input id="customer" name="customer" data-rule-validCustomer="true" required type="text" value="" class="form-control" />
         </div>
     </div>
     <div class="form-group">
         <label>Movie</label>
         <div class="tt-container">
-            <input id="movie" data-rule-atLeastOneMovie="true" type="text" value="" class="form-control" />
+            <input id="movie" name="movie" data-rule-atLeastOneMovie="true" type="text" value="" class="form-control" />
         </div>
     </div>
     <div class="row">
@@ -112,11 +112,10 @@
                 return vm.movieIds.length > 0;
             }, "Please select at least one movie.");
 
-            $("#newRental").validate({
+            var validator = $("#newRental").validate({
                 //if submit form is valid, this function will be called to
                 //submit the form to the server
                 submitHandler: function () {
-                    e.preventDefault();
 
                     $.ajax({
                         url: "/api/newRentals",
@@ -125,10 +124,23 @@
                     })
                     .done(function () {
                         toastr.success("Rentals successfully recorded.");
+                        //clear the form on successful call
+                        $("#customer").typeahead("val", "");
+                        $("#movie").typeahead("val", "");
+                        //clear items from the list of movies
+                        $("#movies").empty();
+
+                        //reset viewmodel(initialize to empty array)
+                        vm = { movieIds: [] };
+
+                        //reset the form in terms of its validation
+                        validator.resetForm();
                     })
                     .fail(function () {
                         toastr.success("Shit went wrong, man.");
                     });
+                    //prevents form from being submited noramlly
+                    return false;
                 }
             });
         });
