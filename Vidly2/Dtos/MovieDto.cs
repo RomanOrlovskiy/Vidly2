@@ -22,7 +22,7 @@ namespace Vidly2.Dtos
         [Column(TypeName = "DateTime2")]
         public DateTime DateAdded { get; set; }
 
-        [Range(1,2)]
+        [Range(1,20)]
         public byte NumberInStock { get; set; }                
 
         public byte GenreId { get; set; }

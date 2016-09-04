@@ -10,6 +10,8 @@ namespace Vidly2.Models
 {
     public class Rental
     {
+        //This is an object that represents a rental movie.
+
         public int Id { get; set; }
 
         [Column(TypeName = "DateTime2")]
