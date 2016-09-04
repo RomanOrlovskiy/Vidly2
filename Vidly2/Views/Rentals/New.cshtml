@@ -19,6 +19,10 @@
         <input id="movie" type="text" value="" class="form-control" />
     </div>
 
+    <ul id="movies" class="list-group">
+
+    </ul>
+
     <button class="btn btn-primary">Submit</button>
 </form>
 @section scripts
@@ -26,7 +30,9 @@
     <script>
         $(document).ready(function () {
 
-            var vm = {};
+            var vm = {
+                movieIds: []
+            };
 
             //Bloodhound is a suggestion engine behind the typeahead.
             //It encapsulates all the business logic behind autocomplition.
@@ -68,7 +74,6 @@
             var movies = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                //prefetch: '../data/films/post_1960.json',
                 remote: {
                     url: '/api/movies?query=%QUERY',
                     wildcard: '%QUERY'
@@ -83,7 +88,12 @@
                 display: 'name',
                 source: movies
             }).on("typeahead:select", function (e, movie) {
-                alert("Sending a movie to db");
+                //when movies is selected add it to list above the textbox
+                $("#movies").append("<li>" + movie.name + "</li>");
+                //clear the movie textbox after selection
+                $("#movie").typeahead("val", "");
+                //store movie in viewmodel to send it to server later
+                vm.movieIds.push(movie.Id);
 
             });
         });
