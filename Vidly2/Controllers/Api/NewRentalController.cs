@@ -21,14 +21,6 @@ namespace Vidly2.Controllers.Api
             _context = new ApplicationDbContext();
         }
 
-        // GET /api/newrental/
-        public IHttpActionResult NewRental()
-        {
-
-
-            return Ok();
-        }
-
         // POST /api/CreateNewRentals
         [System.Web.Http.HttpPost]
         public IHttpActionResult CreateNewRentals(NewRentalDto newRental)

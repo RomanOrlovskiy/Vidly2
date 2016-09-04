@@ -6,7 +6,7 @@
 <h2>New Rental Form</h2>
 @*Using raw HTML instead of RazorViews*@
 
-<form>
+<form id="newRental">
     @*Zencoding from WebEssentials
     div.form-group>label+input[type='text'].form-control and press tab
     *@
@@ -72,7 +72,7 @@
                 //later send this customer to the server. Do this with .on event
             }).on("typeahead:select", function (e, customer) {
                 //e - for event, customer - selected customer
-                //stroing the customer in the ViewModel(vm) object above
+                //storng the customer in the ViewModel(vm) object above
                 vm.customerId = customer.id;
             });
 
@@ -98,8 +98,24 @@
                 //clear the movie textbox after selection
                 $("#movie").typeahead("val", "");
                 //store movie in viewmodel to send it to server later
-                vm.movieIds.push(movie.Id);
+                vm.movieIds.push(movie.id);
 
+            });
+
+            $("#newRental").submit(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: "/api/newRentals",
+                    method: "post",
+                    data: vm
+                })
+                .done(function () {
+                    alert("done");
+                })
+                .fail(function () {
+                    alert("failed");
+                });
             });
         });
     </script>
