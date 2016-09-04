@@ -87,3 +87,16 @@
 				/ExternalLoginConfirmation in AccountController.cs
 			 4) adding Phone fields to the correspoding Views (Register and 
 				ExternalLoginConfirmation).
+
+
+			Section 10. Building feature end-to-end.
+			1. Understand the Problem.	
+				The feature is going to be a rental page using which the manager
+				will add to a specific customer the movies that he is renting
+				when the customer check-out in the store.
+				To do this, the page should provide following fields:
+					- a field for customer identification of some sort(customerId),
+					- a field where the manager will type the movies Ids
+					  and when clicking to add the movie there will be an AJAX
+					  call to the server to get the movie name and display it
+					  in the list on the same page under the movieId field.
