@@ -75,3 +75,15 @@
 			 Section 7 Exercise:
 			 Using jQuery and AJAX to make calls to API along side with
 			 Bootbox and DataTable plug-ins for front-end.
+
+			 Section 8 Exercise:
+			 Adding Phone property to User registration includes:
+			 1) adding Phone property to domain model, creating migration, 
+				updating database;
+			 2) changing ViewModels by adding Phone property to both RegisterViewModel
+				and ExternalLoginConfirmationViewModel 
+			 3)	changing the actions that are responsible to take that property
+				from the user and put in the DB, like /Register and
+				/ExternalLoginConfirmation in AccountController.cs
+			 4) adding Phone fields to the correspoding Views (Register and 
+				ExternalLoginConfirmation).
