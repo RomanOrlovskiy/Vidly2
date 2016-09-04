@@ -3,7 +3,14 @@
 @{
     ViewBag.Title = "Error";
 }
-
+@*This file is responsible for Error pages. You can modify it however you want.
+  The model that is responsible for firing this page is in the FilterConfig.cs
+    file. This is a filter HandleErrorAttribute. As all filters it is applied
+    to all controllers and all actions and it can be executes before and after
+    an action.
+    So if there is an unhandled exception after an action, the filter will catch
+    it and display this error message view.  
+    *@
 <h1 class="text-danger">Error.</h1>
 <h2 class="text-danger">An error occurred while processing your request.</h2>
 
