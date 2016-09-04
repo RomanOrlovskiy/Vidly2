@@ -14,7 +14,8 @@ namespace Vidly2
                         "~/Scripts/bootbox.js",
                         "~/Scripts/respond.js",
                         "~/Scripts/datatables/jquery.datatables.js",
-                        "~/Scripts/datatables/datatables.bootstrap.js"
+                        "~/Scripts/datatables/datatables.bootstrap.js",
+                        "~/Scripts/typeahead.bundle.js"
                         ));
 
             #region Enabling Client-side validation
@@ -40,7 +41,8 @@ namespace Vidly2
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-lumen.css",
-                      "~/context/datatables/css/datatables.bootstrap.css",
+                      "~/Content/datatables/css/datatables.bootstrap.css",
+                      "~/Content/typeahead.css",
                       "~/Content/site.css"));
         }
     }

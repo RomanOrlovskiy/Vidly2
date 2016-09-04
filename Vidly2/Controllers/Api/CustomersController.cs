@@ -32,7 +32,7 @@ namespace Vidly2.Controllers.Api
          * for API Versioning.
          
              */
-                    
+
         /*      AutoMapper
          * To avoid the need to manually remap from one object to another
          * (from Customer to CustomerDto or vice-verse)
@@ -43,21 +43,37 @@ namespace Vidly2.Controllers.Api
              */
 
         // GET /api/customers
-        public IEnumerable<CustomerDto> GetCustomers()
+        public IHttpActionResult GetCustomers(string query = null)
         {
-            
-            //Mapping Customer objects from database to CustomerDto objects
-            //Mapper.Map is a reference to the method(delegate) not the call, so no () at the end.
-            return _context.Customers
-                .Include(c => c.MembershipType)
-                .ToList()
+
+            var customersQuery = _context.Customers.Include(c => c.MembershipType);
+
+            if (!String.IsNullOrWhiteSpace(query))
+                customersQuery = customersQuery.Where(c => c.Name.Contains(query));
+
+            var customerDtos = customersQuery.ToList()
                 .Select(Mapper.Map<Customer, CustomerDto>);
 
-            //Now, when we are getting data using our API we are not 
-            //sending MembershipType information. So we need to Eager Load
-            //the customers with their MembershipType together.
-            //So, I need .Include() here to do this.
+            return Ok(customerDtos);
+
         }
+
+        // GET /api/customers
+        //public IEnumerable<CustomerDto> GetCustomers()
+        //{
+
+        //    //Mapping Customer objects from database to CustomerDto objects
+        //    //Mapper.Map is a reference to the method(delegate) not the call, so no () at the end.
+        //    return _context.Customers
+        //        .Include(c => c.MembershipType)
+        //        .ToList()
+        //        .Select(Mapper.Map<Customer, CustomerDto>);
+
+        //    //Now, when we are getting data using our API we are not 
+        //    //sending MembershipType information. So we need to Eager Load
+        //    //the customers with their MembershipType together.
+        //    //So, I need .Include() here to do this.
+        //}
 
         //GET /api/customers/1
         public IHttpActionResult GetCustomer(int id)

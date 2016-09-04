@@ -12,12 +12,81 @@
     *@
     <div class="form-group">
         <label>Customer</label>
-        <input type="text" value="" class="form-control" />
+        <input id="customer" type="text" value="" class="form-control" />
     </div>
     <div class="form-group">
         <label>Movie</label>
-        <input type="text" value="" class="form-control" />
+        <input id="movie" type="text" value="" class="form-control" />
     </div>
 
     <button class="btn btn-primary">Submit</button>
 </form>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            var vm = {};
+
+            //Bloodhound is a suggestion engine behind the typeahead.
+            //It encapsulates all the business logic behind autocomplition.
+            var customers = new Bloodhound({
+                //look at the NAME property of customer and use whitespace
+                //to tokenize them.
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                //transfers query into a bunch of tokens
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                //prefetch is useful for providing data upon initialization
+                //prefetch: '../data/films/post_1960.json',
+                remote: {
+                    //What the user types in the textbox is a WILDCARD here.
+                    //Url will query that wildcard from the server.
+                    url: '/api/customers?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+
+            $('#customer').typeahead({
+                //Query the server when there are at least 3 characters.
+                minLength: 3,
+                highlight: true
+            }, {
+                name: 'customers',
+                //Display specifies what property of our customers we should
+                //show in the suggestion list.
+                display: 'name',
+                //The source is the Bloodhound object from above.
+                source: customers
+                //We want to know which customer was picked so that we can 
+                //later send this customer to the server. Do this with .on event
+            }).on("typeahead:select", function (e, customer) {
+                //e - for event, customer - selected customer
+                //stroing the customer in the ViewModel(vm) object above
+                vm.customerId = customer.id;
+            });
+
+            var movies = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                //prefetch: '../data/films/post_1960.json',
+                remote: {
+                    url: '/api/movies?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+
+            $('#movie').typeahead({
+                minLength: 1,
+                highlight: true
+            }, {
+                name: 'movies',
+                display: 'name',
+                source: movies
+            }).on("typeahead:select", function (e, movie) {
+                alert("Sending a movie to db");
+
+            });
+        });
+    </script>
+
+}
