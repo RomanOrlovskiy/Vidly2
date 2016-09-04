@@ -100,3 +100,14 @@
 					  and when clicking to add the movie there will be an AJAX
 					  call to the server to get the movie name and display it
 					  in the list on the same page under the movieId field.
+
+
+			Steps for Systematic Approach:
+			-> understand the problem,
+			-> start with the backend,
+			-> think of the inputs and the output,
+			-> declare a simple API,
+			-> extend the domain model (if required),
+			-> build the happy path(the minimal amount of code for feature to work)
+			-> add the details one by one(like looking for possible edge cases and preventing them),
+			-> move on to the front end
