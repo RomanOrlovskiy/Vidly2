@@ -311,7 +311,9 @@
   <ItemGroup>
     <Content Include="404.html" />
     <Content Include="App_Readme\Elmah.txt" />
+    <Content Include="Content\bootstrap-cosmo.css" />
     <Content Include="Content\bootstrap-lumen.css" />
+    <Content Include="Content\bootstrap-superhero.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.css" />
